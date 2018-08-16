@@ -54,7 +54,7 @@ var find_block = function (height_or_hash, callback) {
     }
   }
   conditions.ccparsed = true
-  return Blocks.findOne(conditions, no_id).lean().exec(callback)
+  return Blocks.find(conditions, no_id).lean().exec(callback);
 }
 
 var add_used_txid = function (tx, callback) {
@@ -700,6 +700,7 @@ var find_first_issuance = function (assetId, utxo, callback) {
 }
 
 var find_main_stats = function (callback) {
+  console.log('skdkasd');
   var main_stats = {}
   async.parallel([
     function (cb) {
@@ -1133,6 +1134,7 @@ var get_transactions_by_intervals = function (req, res, next) {
 }
 
 var get_main_stats = function (req, res, next) {
+  console.log(req);
   var cache_key = req.originalUrl
   var ttl = 1 * 60 * 60 * 1000 // 1 hour
   var main_stats = cache.get(cache_key)
@@ -1151,6 +1153,7 @@ var get_main_stats = function (req, res, next) {
 var get_block = function (req, res, next) {
   var params = req.data
   var height_or_hash = params.height_or_hash
+  console.log(params);
 
   find_block(height_or_hash, function (err, block) {
     if (err) return next(err)
